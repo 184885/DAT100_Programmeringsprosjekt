@@ -5,6 +5,10 @@ import no.hvl.dat100ptc.oppgave1.GPSPoint;
 
 public class GPSDataConverter {
 
+		// konverter tidsinformasjon i gps data punkt til antall sekunder fra midnatt
+		// dvs. ignorer information om dato og omregn tidspunkt til sekunder
+		// Eksempel - tidsinformasjon (som String): 2017-08-13T08:52:26.000Z
+	    // skal omregnes til sekunder (som int): 8 * 60 * 60 + 52 * 60 + 26 
 	
 	private static int TIME_STARTINDEX = 11; 
 
@@ -14,16 +18,32 @@ public class GPSDataConverter {
 		int hr, min, sec;
 		
 		// TODO
-		throw new UnsupportedOperationException(TODO.method());
+		
+		hr = Integer.parseInt(timestr.substring(TIME_STARTINDEX,13));
+		min = Integer.parseInt(timestr.substring(14,16));
+		sec = Integer.parseInt(timestr.substring(17,19));
+		
+		secs = (hr * 60 * 60) + (min * 60) + sec;
+		
+		return secs;
+	
 		
 	}
 
 	public static GPSPoint convert(String timeStr, String latitudeStr, String longitudeStr, String elevationStr) {
 
-		GPSPoint gpspoint;
-
-		// TODO 
-		throw new UnsupportedOperationException(TODO.method());
+		//  Her returneres et nytt gpspoint, og string blir konvertert til desimaler
+		
+		GPSPoint gpspoint = new GPSPoint (
+				
+				toSeconds(timeStr),
+				Double.parseDouble(latitudeStr),
+				Double.parseDouble(longitudeStr),
+				Double.parseDouble(elevationStr)
+				
+				);
+		
+		return gpspoint;
 		
 	}
 	
