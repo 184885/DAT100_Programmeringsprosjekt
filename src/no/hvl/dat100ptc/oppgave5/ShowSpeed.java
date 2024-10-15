@@ -42,7 +42,21 @@ public class ShowSpeed extends EasyGraphics {
 		int x = MARGIN,y;
 	
 		// TODO
-		throw new UnsupportedOperationException(TODO.method());
+	/*double[] speedKmH=new double[gpscomputer.speeds().length];
+		for (int i=0;i<speedKmH.length;i++) {
+			speedKmH[i]=gpscomputer.speeds()[i]*3.6;
+			}*/
+		setColor(0,255,0);
+		y=ybase-(int)(gpscomputer.averageSpeed()*3.6);
+		int xend=x+2*gpscomputer.speeds().length;
+		drawLine(x,y,xend,y);
+		
+		setColor(0,0,255);
+		for (int i=0;i<gpscomputer.speeds().length;i++) {
+			y=ybase-(int)(gpscomputer.speeds()[i]*3.6);
+			drawLine(x,ybase,x,y);
+			x+=2;
+		}
 		
 	}
 }
