@@ -96,11 +96,11 @@ public class ShowRoute extends EasyGraphics {
 		
 		//Scanner sc = new Scanner(System.console().reader());
 		gpscomputer.displayStatistics();
-		String display = System.console().readLine();//sc.nextLine();
+		//String display = System.console().readLine();//sc.nextLine();
 		
 		
 		//sc.close();
-		drawString(display, TEXTDISTANCE, TEXTDISTANCE);
+		//drawString(display, TEXTDISTANCE, TEXTDISTANCE);
 
 	}
 

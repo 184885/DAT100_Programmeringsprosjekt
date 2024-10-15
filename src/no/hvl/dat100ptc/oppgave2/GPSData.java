@@ -8,7 +8,7 @@ public class GPSData {
 	private GPSPoint[] gpspoints;
 	protected int antall = 0;
 
-	public GPSData(int n) {
+	public GPSData(int antall) {
 
 		// TODO
 		gpspoints = new GPSPoint[antall];
