@@ -1,7 +1,5 @@
 package no.hvl.dat100ptc.oppgave5;
 
-import java.io.Console;
-import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 import easygraphics.EasyGraphics;
@@ -67,13 +65,21 @@ public class ShowRoute extends EasyGraphics {
 	public void showRouteMap(int ybase) {
 
 		// TODO
-
+		setColor(1, 150, 32);
+		double mlat = GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints));
+		double mlon = GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints));
 		for (int i = 0; i < gpspoints.length; i++) {
-			double lat = gpspoints[i].getLatitude() * xstep;
-			double lon = gpspoints[i].getLongitude() * ystep;
-			drawCircle((int) lat, (int) lon, 10);
-		}
+			double lat = ybase - (ystep * Math.abs(mlat - GPSUtils.getLatitudes(gpspoints)[i]));
+			double lon = (xstep * Math.abs(mlon - GPSUtils.getLongitudes(gpspoints)[i]));
 
+			if (i < gpspoints.length - 1) {
+				double lat2 = ybase - (ystep * Math.abs(mlat - GPSUtils.getLatitudes(gpspoints)[i + 1]));
+				double lon2 = (xstep * Math.abs(mlon - GPSUtils.getLongitudes(gpspoints)[i + 1]));
+				drawLine(MARGIN + (int) lon, (int) lat, MARGIN + (int) lon2, (int) lat2);
+			}
+			fillCircle(MARGIN + (int) lon, (int) lat, 3);
+			
+		}
 	}
 
 	public void showStatistics() {
@@ -84,37 +90,42 @@ public class ShowRoute extends EasyGraphics {
 		setFont("Courier", 12);
 
 		// TODO
-		Console console = System.console();
 
-		if(console == null) {
-			System.out.println("Console is not available to current JVM process");
-			return;
-		}
 		
-		
-		
-		
-		//Scanner sc = new Scanner(System.console().reader());
-		gpscomputer.displayStatistics();
-		//String display = System.console().readLine();//sc.nextLine();
-		
-		
-		//sc.close();
-		//drawString(display, TEXTDISTANCE, TEXTDISTANCE);
-
+		String[] display=gpscomputer.stringStatistics();	
+	
+		drawString(display[1], TEXTDISTANCE, TEXTDISTANCE);
+		drawString(display[2], TEXTDISTANCE, TEXTDISTANCE*2);
+		drawString(display[3], TEXTDISTANCE, TEXTDISTANCE*3);
+		drawString(display[4], TEXTDISTANCE, TEXTDISTANCE*4);
+		drawString(display[5], TEXTDISTANCE, TEXTDISTANCE*5);
+		drawString(display[6], TEXTDISTANCE, TEXTDISTANCE*6);
 	}
 
 	public void replayRoute(int ybase) {
 
 		// TODO
-		int replay = drawCircle((int) (gpspoints[0].getLatitude() * xstep), (int) (gpspoints[0].getLongitude() * ystep),
-				10);
-		setSpeed(5);
-		for (int i = 0; i < gpspoints.length; i++) {
-			double lat = gpspoints[i].getLatitude() * xstep;
-			double lon = gpspoints[i].getLongitude() * ystep;
-			moveCircle(replay, (int) lat, (int) lon);
+		
+		double mlat = GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints));
+		double mlon = GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints));
+		double lat = ybase - (ystep * Math.abs(mlat - GPSUtils.getLatitudes(gpspoints)[0]));
+		double lon = MARGIN+(xstep * Math.abs(mlon - GPSUtils.getLongitudes(gpspoints)[0]));
+		setColor(0,0,255);
+		int replay =fillCircle((int)lon,(int)lat,4);
+		setSpeed(2);
+		for (int i=0;i<gpspoints.length;i++) {
+			lat = ybase - (ystep * Math.abs(mlat - GPSUtils.getLatitudes(gpspoints)[i]));
+			lon = MARGIN+(xstep * Math.abs(mlon - GPSUtils.getLongitudes(gpspoints)[i]));
+			moveCircle(replay, (int)lon,(int)lat);	
 		}
+		
+		/*
+		 * int replay = drawCircle(MARGIN+(int) (gpspoints[0].getLatitude() * xstep),
+		 * ybase-(int) (gpspoints[0].getLongitude() * ystep), 1); setSpeed(10); for (int
+		 * i = 0; i < gpspoints.length; i++) { double lat = gpspoints[i].getLatitude() *
+		 * xstep; double lon = gpspoints[i].getLongitude() * ystep; moveCircle(replay,
+		 * MARGIN+(int) lat, ybase-(int) lon); }
+		 */
 	}
 
 }

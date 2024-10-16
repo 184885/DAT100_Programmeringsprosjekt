@@ -145,23 +145,35 @@ public class GPSComputer {
 	public void displayStatistics() {
 
 		// TODO
-		String format1 = "%1$-15s:";
 		
-		String d =  GPSUtils.formatDouble(totalDistance() / 1000);
-		String e =  GPSUtils.formatDouble(totalElevation());
-		String ms = GPSUtils.formatDouble(maxSpeed()*3.6);
-		String as = GPSUtils.formatDouble(averageSpeed()*3.6);
-		String k =  GPSUtils.formatDouble(totalKcal(WEIGHT));
-		
-		System.out.println("==============================================");
-		System.out.println(String.format(format1, "Total Time") + GPSUtils.formatTime(totalTime()));
-		System.out.println(String.format(format1, "Total distance") + d + " km");
-		System.out.println(String.format(format1, "Total elevation") + e + " m");
-		System.out.println(String.format(format1, "Max speed")+ms+" km/t");
-		System.out.println(String.format(format1, "Average speed")+as+" km/t");
-		System.out.println(String.format(format1, "Energy")+k+" kcal");
-		System.out.println("==============================================");
-		
+		String str[]=stringStatistics();
+		System.out.println(str[0]+"\n"+str[1]+"\n"+str[2]+"\n"+str[3]+"\n"+str[4]+"\n"+str[5]+"\n"+str[6]+"\n"+str[0]);
+		/*System.out.println(t);
+		System.out.println(d);
+		System.out.println(e);
+		System.out.println(ms);
+		System.out.println(as);
+		System.out.println(k);
+		System.out.println(eq);*/
+
+	}
+	public String[] stringStatistics() {
+		String format = "%1$-15s:";
+
+		String t = String.format(format, "Total Time") + GPSUtils.formatTime(totalTime());
+		String d = GPSUtils.formatDouble(totalDistance() / 1000);
+		d = String.format(format, "Total distance") + d + " km";
+		String e = GPSUtils.formatDouble(totalElevation());
+		e = String.format(format, "Total elevation") + e + " m";
+		String ms = GPSUtils.formatDouble(maxSpeed() * 3.6);
+		ms = String.format(format, "Max speed") + ms + " km/t";
+		String as = GPSUtils.formatDouble(averageSpeed() * 3.6);
+		as = String.format(format, "Average speed") + as + " km/t";
+		String k = GPSUtils.formatDouble(totalKcal(WEIGHT));
+		k = String.format(format, "Energy") + k + " kcal";
+		String eq = "==============================================";
+		String[] str = { eq, t, d, e, ms, as, k, eq};
+		return str;
 	}
 
 }
