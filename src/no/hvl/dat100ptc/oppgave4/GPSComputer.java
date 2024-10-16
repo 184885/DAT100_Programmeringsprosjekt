@@ -145,18 +145,13 @@ public class GPSComputer {
 	public void displayStatistics() {
 
 		// TODO
-		
-		String str[]=stringStatistics();
-		System.out.println(str[0]+"\n"+str[1]+"\n"+str[2]+"\n"+str[3]+"\n"+str[4]+"\n"+str[5]+"\n"+str[6]+"\n"+str[0]);
-		/*System.out.println(t);
-		System.out.println(d);
-		System.out.println(e);
-		System.out.println(ms);
-		System.out.println(as);
-		System.out.println(k);
-		System.out.println(eq);*/
+
+		String str[] = stringStatistics();
+		System.out.println(str[0] + "\n" + str[1] + "\n" + str[2] + "\n" + str[3] + "\n" + str[4] + "\n" + str[5] + "\n"
+				+ str[6] + "\n" + str[0]);
 
 	}
+
 	public String[] stringStatistics() {
 		String format = "%1$-15s:";
 
@@ -172,8 +167,27 @@ public class GPSComputer {
 		String k = GPSUtils.formatDouble(totalKcal(WEIGHT));
 		k = String.format(format, "Energy") + k + " kcal";
 		String eq = "==============================================";
-		String[] str = { eq, t, d, e, ms, as, k, eq};
+		String[] str = { eq, t, d, e, ms, as, k, eq };
 		return str;
+	}
+
+	public double[] climbs() {
+		double[] d = new double[gpspoints.length - 1]; //Oppretter ein tabell med alle distansane (ikkje nødvendig, men gjorde det enklere å tenke)
+		double[] e = new double[gpspoints.length - 1]; //Oppretter ein tabell med alle høydene (ikkje nødvendig, men gjorde det enklere å tenke)
+		double[] climb = new double[d.length];
+		for (int i = 0; i < e.length; i++) {
+
+			d[i] = GPSUtils.distance(gpspoints[i], gpspoints[i + 1]);
+			e[i] = gpspoints[i + 1].getElevation() - gpspoints[i].getElevation();
+			climb[i] = Math.atan(e[i] / d[i])*100; //Finner graden mellom lengde og høgde og omgjør til prosent
+		}
+
+		return climb;
+	}
+
+	public double maxClimb() {
+		double max = GPSUtils.findMax(climbs()); //finner max frå climb tabellen
+		return max;
 	}
 
 }

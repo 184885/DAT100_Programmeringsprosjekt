@@ -53,32 +53,32 @@ public class ShowProfile extends EasyGraphics {
 		for (int i = 0; i < e.length; i++) {
 			e[i] = gpspoints[i].getElevation();
 		}
-
+		int t0 = gpspoints[0].getTime();
+		int sfactor = Integer.parseInt(getText("Skalering: \n(1:input)"));
 		// double max = MAXBARHEIGHT / GPSUtils.findMax(e);
-		setColor(0, 0, 255);
+
 		for (int i = 0; i < gpspoints.length; i++) {
-			y = ybase;
-			if (e[i] <= 0) {
-				/*
-				 * for (int j = i - 1; j > 0; j--) {
-				 * 
-				 * if (e[j] > 0) { y = ybase-(int) (e[j] * max); j = 0; }
-				 * 
-				 * }
-				 */
-
-			} else {
-				y = ybase - (int) e[i];
+			setColor(0, 255, 0);
+			y = ybase - (int) e[i];
+			if (i != 0 && e[i] > e[i - 1]) {
+				setColor(255, 32, 1);
+			} else if (i != 0 && e[i] == e[i - 1]) {
+				setColor(32, 1, 255);
 			}
-
 			drawLine(x, ybase, x, y);
 			x++;
+			drawLine(x, ybase, x, y);
 			// drawLine(x,ybase,x,y);
-			x++;
+			x += 2;
+			if (i < gpspoints.length - 1) {
+				int t1 = gpspoints[i + 1].getTime();
+				pause((t1 - t0) * 1000 / sfactor);
+				t0 = t1;
+			}
+
 		}
-		// System.out.print(max+" Hello "+ e[9]);
-		// y = MARGIN+(int)(e[9]*max);
-		// drawLine(x,ybase,x,y);
+		setColor(0, 0, 0);
+		// drawString("TEKST",MARGIN,ybase+20);
 	}
 
 }
