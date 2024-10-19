@@ -13,7 +13,7 @@ public class ShowRoute extends EasyGraphics {
 
 	private static int MARGIN = 50;
 	private static int MAPXSIZE = 800;
-	private static int MAPYSIZE = 800;
+	private static int MAPYSIZE = 600;
 
 	private GPSPoint[] gpspoints;
 	private GPSComputer gpscomputer;
@@ -123,9 +123,20 @@ public class ShowRoute extends EasyGraphics {
 		double lon = MARGIN + (xstep * Math.abs(mlon - GPSUtils.getLongitudes(gpspoints)[0]));
 		setColor(0, 0, 255);
 		int replay = fillCircle((int) lon, (int) lat, 4);
+		double maxspeed = GPSUtils.findMax(gpscomputer.speeds());
+		double minspeed = GPSUtils.findMin(gpscomputer.speeds());
+		double speed = maxspeed - minspeed;
+		double scalespeed = 10 / speed;
 
 		for (int i = 0; i < gpspoints.length; i++) {
-			setSpeed(2);
+			if (i < gpscomputer.speeds().length) {
+				if (gpscomputer.speeds()[i] * scalespeed <= 10) {
+					setSpeed((int) Math.ceil(gpscomputer.speeds()[i] * scalespeed));
+				} else {
+					setSpeed(10);
+				}
+				System.out.println(gpscomputer.speeds()[i] * scalespeed);
+			}
 			lat = ybase - (ystep * Math.abs(mlat - GPSUtils.getLatitudes(gpspoints)[i]));
 			lon = MARGIN + (xstep * Math.abs(mlon - GPSUtils.getLongitudes(gpspoints)[i]));
 			moveCircle(replay, (int) lon, (int) lat);
