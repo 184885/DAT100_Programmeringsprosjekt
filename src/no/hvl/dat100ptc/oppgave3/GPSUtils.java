@@ -42,8 +42,8 @@ public class GPSUtils {
 	public static double[] getLatitudes(GPSPoint[] gpspoints) {
 
 		// TODO
-		double[] latitudes = new double[gpspoints.length];
-		for (int i = 0; i < gpspoints.length; i++) {
+		double[] latitudes = new double[gpspoints.length]; //Oppretter ny tabell 
+		for (int i = 0; i < gpspoints.length; i++) { //Skriver inn kvart latitudes verdi i tabellen
 			latitudes[i] = gpspoints[i].getLatitude();
 		}
 		return latitudes;
@@ -54,8 +54,8 @@ public class GPSUtils {
 
 		// TODO
 
-		double[] longitudes = new double[gpspoints.length];
-		for (int i = 0; i < gpspoints.length; i++) {
+		double[] longitudes = new double[gpspoints.length]; //Oppretter ny tabell 
+		for (int i = 0; i < gpspoints.length; i++) { //Skriver inn kvart longitudes verdi i tabellen
 			longitudes[i] = gpspoints[i].getLongitude();
 		}
 		return longitudes;
@@ -69,15 +69,19 @@ public class GPSUtils {
 		double latitude1, longitude1, latitude2, longitude2;
 
 		// TODO
+		//Setter verdier som er relevante for å rekne distanse i følge formelen
 		latitude1 = gpspoint1.getLatitude();
 		longitude1 = gpspoint1.getLongitude();
 		latitude2 = gpspoint2.getLatitude();
 		longitude2 = gpspoint2.getLongitude();
-
+		
+		//Omrekner til radianer
 		double phi1 = Math.toRadians(latitude1);
 		double phi2 = Math.toRadians(latitude2);
-		double deltaphi = phi1 - phi2;
+		//Rekner ut deltaphi og delta'delta' *lamda
+		double deltaphi = phi2 - phi1;
 		double deltadelta = Math.toRadians(longitude2) - Math.toRadians(longitude1);
+		// Bruker hjelpesetningane til å rekne avstanden
 		d = R * compute_c(compute_a(phi1, phi2, deltaphi, deltadelta));
 
 		return d;
@@ -108,9 +112,9 @@ public class GPSUtils {
 		double speed;
 
 		// TODO
-		double d = distance(gpspoint1, gpspoint2);
-		secs = gpspoint2.getTime() - gpspoint1.getTime();
-		speed = d / secs;
+		double d = distance(gpspoint1, gpspoint2); //bruker distance til å finne avstanden mellom punktene
+		secs = gpspoint2.getTime() - gpspoint1.getTime(); //Rekner tida som er gått mellom punkta
+		speed = d / secs; //Rekner ut farten
 		return speed;
 
 	}
@@ -120,12 +124,12 @@ public class GPSUtils {
 		String timestr;
 		String TIMESEP = ":";
 		// TODO
-		String format1 = "  %1$02d" + TIMESEP + "%2$02d" + TIMESEP + "%3$02d";
-		int hh = secs / 3600;
-		int mm = secs % 3600 / 60;
-		int ss = secs - hh * 3600 - mm * 60;
-		timestr = String.format(format1, hh, mm, ss);
-		String time = String.format("%1$10S", timestr);
+		String format1 = "  %1$02d" + TIMESEP + "%2$02d" + TIMESEP + "%3$02d"; //Setter opp eit format for koden
+		int hh = secs / 3600; //Rekner ut timer 
+		int mm = secs % 3600 / 60; // Rekner ut gjenståande minutter
+		int ss = secs - hh * 3600 - mm * 60; //Rekner ut gjenståande sekunder
+		timestr = String.format(format1, hh, mm, ss); //Lagar ein String med ønsket format
+		String time = String.format("%1$10S", timestr); //Sørger for at stringen er ønsket lengde
 		return time;
 
 	}

@@ -42,10 +42,7 @@ public class ShowSpeed extends EasyGraphics {
 		int x = MARGIN,y;
 	
 		// TODO
-	/*double[] speedKmH=new double[gpscomputer.speeds().length];
-		for (int i=0;i<speedKmH.length;i++) {
-			speedKmH[i]=gpscomputer.speeds()[i]*3.6;
-			}*/
+
 		setColor(0,255,0);
 		y=ybase-(int)(gpscomputer.averageSpeed()*3.6);
 		int xend=x+2*gpscomputer.speeds().length;

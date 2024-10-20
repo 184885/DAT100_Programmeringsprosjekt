@@ -26,7 +26,7 @@ public class GPSData {
 
 
 		// TODO
-		if (antall < gpspoints.length) {
+		if (antall < gpspoints.length) { //Sjekker at det er plass i tabellen og setter inn GPSPunktet
 			gpspoints[antall] = gpspoint;
 			inserted = true;
 			antall++;
@@ -40,7 +40,7 @@ public class GPSData {
 		GPSPoint gpspoint;
 
 		// TODO
-		gpspoint = GPSDataConverter.convert(time, latitude, longitude, elevation);
+		gpspoint = GPSDataConverter.convert(time, latitude, longitude, elevation); //Bruker convert til å omgjøre String verdiane til eit GPSPunkt
 		boolean insert = insertGPS(gpspoint);
 		return insert;
 

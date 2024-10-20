@@ -33,11 +33,11 @@ public class GPSDataConverter {
 		GPSPoint gpspoint;
 
 		// TODO
-		int time = toSeconds(timeStr);
-		double lat = Double.parseDouble(latitudeStr);
+		int time = toSeconds(timeStr); //Bruker toSeconds til å omdanne til int verdi
+		double lat = Double.parseDouble(latitudeStr); //Omgjør String verdi til double
 		double lon = Double.parseDouble(longitudeStr);
 		double elevation = Double.parseDouble(elevationStr);
-		gpspoint = new GPSPoint(time, lat, lon, elevation);
+		gpspoint = new GPSPoint(time, lat, lon, elevation); //Oppretter punkt med verdiane
 		return gpspoint;
 
 	}

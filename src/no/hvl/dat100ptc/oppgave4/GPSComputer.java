@@ -105,21 +105,21 @@ public class GPSComputer {
 		double speedmph = speed * MS;
 
 		// TODO
-		double[] cycling = new double[] { 4.0, 6.0, 8.0, 10.0, 12.0, 16.0 };
-		double[] speedsmph = new double[] { 10.0, 12.0, 14.0, 16.0, 20.0 };
-		if (speedmph < speedsmph[0]) {
+		double[] cycling = new double[] { 4.0, 6.0, 8.0, 10.0, 12.0, 16.0 }; //Met skala for sykling
+		double[] speedsmph = new double[] { 10.0, 12.0, 14.0, 16.0, 20.0 }; // fart for ulik met verdi (sykling)
+		if (speedmph < speedsmph[0]) { //om farta er lågare enn 10 får met verdi som 4.0
 			met = cycling[0];
 		} else {
-			met = cycling[cycling.length - 1];
+			met = cycling[cycling.length - 1];// vis ikkje blir met høgaste verdi
 		}
-		for (int i = 0; i < speedsmph.length - 1; i++) {
+		for (int i = 0; i < speedsmph.length - 1; i++) { //Går gjennom og sjekker om verdien faller innanfor eit av dei andre fartene
 			if (speedmph >= speedsmph[i] && speedmph < speedsmph[i + 1]) {
 				met = cycling[i + 1];
 			}
 		}
 
-		double hr = (double) secs / 3600;
-		kcal = met * weight * hr;
+		double hr = (double) secs / 3600; //Rekner om til tider
+		kcal = met * weight * hr; //Rekner kcal
 		return kcal;
 	}
 
@@ -130,11 +130,10 @@ public class GPSComputer {
 
 		// TODO
 
-		// totalkcal=kcal(weight,totalTime(),averageSpeed());
 		int t = 0;
 		for (int i = 0; i < speed.length; i++) {
-			t = gpspoints[i + 1].getTime() - gpspoints[i].getTime();
-			totalkcal += kcal(weight, t, speed[i]);
+			t = gpspoints[i + 1].getTime() - gpspoints[i].getTime(); //finner tid
+			totalkcal += kcal(weight, t, speed[i]); //setter inn vekt, tid og fart i kcal metoden, og legger de
 		}
 
 		return totalkcal;
